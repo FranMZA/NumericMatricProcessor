@@ -10,7 +10,8 @@ class Matrix:
         return matrix_string
 
     def __add__(self, other):
-        self.dim_validator(other)
+        if self.dim != other.dim:
+            raise IndexError('Dimensions of the matrices are different')
 
         new_matrix_values = list()
         for row_index in range(self.dim[0]):
@@ -38,8 +39,23 @@ class Matrix:
     def __rmul__(self, constant):
         return self.__mul__(constant)
 
-    def dim_validator(self, other):
-        if self.dim != other.dim:
-            raise IndexError('Dimensions of the matrices are different')
-        else:
-            return None
+    def __pow__(self, other):
+        if self.dim[1] != other.dim[0]:
+            raise ValueError('Dimensions of matrices does not match')
+        dim = (self.dim[0], other.dim[1])
+        new_matrix_values = list()
+        for i in range(dim[0]):
+            row = list()
+            for j in range(dim[1]):
+                aux = 0
+                for index in range(self.dim[1]):
+                    aux += self.values[i][index] * other.values[index][j]
+                row.append(aux)
+            new_matrix_values.append(row)
+        return Matrix(dim, new_matrix_values)
+
+#    def dim_validator(self, other):
+#        if self.dim != other.dim:
+#            raise IndexError('Dimensions of the matrices are different')
+#        else:
+#            return None

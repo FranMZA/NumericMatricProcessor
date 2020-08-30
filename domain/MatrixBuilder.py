@@ -1,6 +1,8 @@
 class MatrixBuilder:
-    def build(self):
+    def build(self, m_dim=None, m_val=None):
+        print(f'{m_dim}')
         dim_matrix = self.dim_input()
+        print(f'{m_val}')
         values = list()
         for row_index in range(dim_matrix[0]):
             values.append(self.row_input(dim_matrix[1]))
